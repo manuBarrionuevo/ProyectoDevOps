@@ -4,6 +4,7 @@ module "vpc_virgina_norte" {
   subnet_private = "10.12.1.0/24"
   subnet_public = "10.12.2.0/24"
   mi_ip = ["45.191.195.199"]
+  
 }
 
 module "Jenkins_instance" {
