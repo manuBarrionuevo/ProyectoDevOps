@@ -5,4 +5,8 @@ resource "aws_instance" "Jenkins_instance" {
   key_name = data.aws_key_pair.key.key_name
   subnet_id = var.subnet_id
   user_data = file(script/user_data)
+  vpc_security_group_ids = [var.grupo_de_seguridad.id]
+  tags = {
+    "Name" = "${each.value}"
+  }
 }

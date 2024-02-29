@@ -10,5 +10,6 @@ module "Jenkins_instance" {
   source = "./modulos/ec2"
   instancias = ["Jenkins"]
   subnet_id = module.vpc_virgina_norte.private_subnet_id
+  grupo_de_seguridad = module.vpc_virgina_norte.jenkins_sg_id
 }
 

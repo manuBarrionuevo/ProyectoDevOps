@@ -19,3 +19,7 @@ output "private_subnet_id" {
 output "subnet_private_cidr" {
   value = aws_subnet.private_subnet.cidr_block
 }
+
+output "jenkins_sg_id" {
+  value = aws_security_group.Jenkins_SG.id
+}
