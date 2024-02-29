@@ -10,6 +10,7 @@ resource "aws_vpc" "vpc_virgina_norte" {
 resource "aws_subnet" "public_subnet" {
   vpc_id = aws_vpc.vpc_virgina_norte.id
   cidr_block = var.subnet_public
+   map_public_ip_on_launch = true
   tags = {
     "Name" = "Public_subnet"
   }  
