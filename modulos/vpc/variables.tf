@@ -11,3 +11,8 @@ variable "subnet_private" {
   description = "CIDR subnet privada"
   type = string
 }
+
+variable "mi_ip" {
+  description = "Mi dirección ip"
+  type = string
+}
