@@ -1,6 +1,6 @@
 
 resource "aws_vpc" "vpc_virgina_norte" {
-  cidr_block = var.vpc_vn
+  cidr_block       = var.vpc_vn
   instance_tenancy = "default"
   tags = {
     "Name" = "VPC-Project-DevOps"
@@ -8,35 +8,41 @@ resource "aws_vpc" "vpc_virgina_norte" {
 }
 
 resource "aws_subnet" "public_subnet" {
-  vpc_id = aws_vpc.vpc_virgina_norte.id
-  cidr_block = var.subnet_public
-   map_public_ip_on_launch = true
+  vpc_id                  = aws_vpc.vpc_virgina_norte.id
+  cidr_block              = var.subnet_public
+  map_public_ip_on_launch = true
   tags = {
     "Name" = "Public_subnet"
-  }  
+  }
 }
 
 resource "aws_subnet" "private_subnet" {
-  vpc_id = aws_vpc.vpc_virgina_norte.id
+  vpc_id     = aws_vpc.vpc_virgina_norte.id
   cidr_block = var.subnet_private
   tags = {
     "Name" = "Private_subnet"
-  } 
+  }
 }
 
 resource "aws_security_group" "Jenkins_SG" {
   vpc_id = aws_vpc.vpc_virgina_norte.id
 
   ingress {
-    from_port = 22
-    to_port = 22
-    protocol = "tcp"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
     cidr_blocks = [var.mi_ip]
   }
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Esto permitirá el tráfico HTTP desde cualquier IP, asegúrate de restringirlo según sea necesario
+  }
   egress {
-    from_port = 0
-    to_port = 0
-    protocol = -1
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
@@ -62,6 +68,6 @@ resource "aws_route_table" "public_crt" {
 }
 
 resource "aws_route_table_association" "crt_public_subnet" {
-  subnet_id = aws_subnet.public_subnet.id
+  subnet_id      = aws_subnet.public_subnet.id
   route_table_id = aws_route_table.public_crt.id
 }
